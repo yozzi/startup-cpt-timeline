@@ -135,4 +135,12 @@ add_shortcode( 'timeline', function( $atts, $content= null ){
     require get_template_directory() . '/inc/shortcodes/timeline.php';
     return ob_get_clean();
 });
+
+// Enqueue scripts and styles.
+function startup_cpt_timeline_scripts() {
+    wp_enqueue_style( 'startup-cpt-timeline-pizza', plugins_url( '/css/style.css', __FILE__ ), array( ), false, 'all' );
+    wp_enqueue_script( 'startup-cpt-timeline-modernizr', plugins_url( '/js/modernizr.js', __FILE__ ), array( ), false, 'all' );
+}
+
+add_action( 'wp_enqueue_scripts', 'startup_cpt_timeline_scripts' );
 ?>
