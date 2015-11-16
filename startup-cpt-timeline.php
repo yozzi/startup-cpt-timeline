@@ -34,25 +34,25 @@ add_action( 'init', 'startup_reloaded_timeline_updater' );
 //CPT
 function startup_reloaded_timeline() {
 	$labels = array(
-		'name'                => _x( 'Timeline', 'Post Type General Name', 'text_domain' ),
-		'singular_name'       => _x( 'Timeline', 'Post Type Singular Name', 'text_domain' ),
-		'menu_name'           => __( 'Timeline', 'text_domain' ),
-		'name_admin_bar'      => __( 'Timeline', 'text_domain' ),
-		'parent_item_colon'   => __( 'Parent Item:', 'text_domain' ),
-		'all_items'           => __( 'All Items', 'text_domain' ),
-		'add_new_item'        => __( 'Add New Item', 'text_domain' ),
-		'add_new'             => __( 'Add New', 'text_domain' ),
-		'new_item'            => __( 'New Item', 'text_domain' ),
-		'edit_item'           => __( 'Edit Item', 'text_domain' ),
-		'update_item'         => __( 'Update Item', 'text_domain' ),
-		'view_item'           => __( 'View Item', 'text_domain' ),
-		'search_items'        => __( 'Search Item', 'text_domain' ),
-		'not_found'           => __( 'Not found', 'text_domain' ),
-		'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' )
+		'name'                => _x( 'Timeline', 'Post Type General Name', 'startup-cpt-timeline' ),
+		'singular_name'       => _x( 'Timeline', 'Post Type Singular Name', 'startup-cpt-timeline' ),
+		'menu_name'           => __( 'Timeline', 'startup-cpt-timeline' ),
+		'name_admin_bar'      => __( 'Timeline', 'startup-cpt-timeline' ),
+		'parent_item_colon'   => __( 'Parent Item:', 'startup-cpt-timeline' ),
+		'all_items'           => __( 'All Items', 'startup-cpt-timeline' ),
+		'add_new_item'        => __( 'Add New Item', 'startup-cpt-timeline' ),
+		'add_new'             => __( 'Add New', 'startup-cpt-timeline' ),
+		'new_item'            => __( 'New Item', 'startup-cpt-timeline' ),
+		'edit_item'           => __( 'Edit Item', 'startup-cpt-timeline' ),
+		'update_item'         => __( 'Update Item', 'startup-cpt-timeline' ),
+		'view_item'           => __( 'View Item', 'startup-cpt-timeline' ),
+		'search_items'        => __( 'Search Item', 'startup-cpt-timeline' ),
+		'not_found'           => __( 'Not found', 'startup-cpt-timeline' ),
+		'not_found_in_trash'  => __( 'Not found in Trash', 'startup-cpt-timeline' )
 	);
 	$args = array(
-		'label'               => __( 'timeline', 'text_domain' ),
-		'description'         => __( '', 'text_domain' ),
+		'label'               => __( 'timeline', 'startup-cpt-timeline' ),
+		'description'         => __( '', 'startup-cpt-timeline' ),
 		'labels'              => $labels,
 		'supports'            => array( 'title', 'editor', 'revisions' ),
 		'hierarchical'        => true,
@@ -113,17 +113,29 @@ function startup_reloaded_timeline_meta() {
 
 	$cmb_box = new_cmb2_box( array(
 		'id'            => $prefix . 'metabox',
-		'title'         => __( 'Timeline details', 'cmb2' ),
+		'title'         => __( 'Timeline details', 'startup-cpt-timeline' ),
 		'object_types'  => array( 'timeline' )
 	) );
     
     $cmb_box->add_field( array(
-            'name'             => __( 'Icon', 'cmb2' ),
-            'desc'             => __( 'The timeline icon', 'cmb2' ),
-            'id'               => $prefix . 'icon',
-            'type'             => 'select',
-            'show_option_none' => true,
-            'options'          => $font_awesome
+		'name'       => __( 'Date', 'startup-cpt-timeline' ),
+		'id'         => $prefix . 'date',
+		'type'       => 'text'
+	) );
+    
+    $cmb_box->add_field( array(
+        'name'             => __( 'Icon', 'startup-cpt-timeline' ),
+        'id'               => $prefix . 'icon',
+        'type'             => 'select',
+        'show_option_none' => true,
+        'options'          => $font_awesome
+    ) );
+    
+    $cmb_box->add_field( array(
+        'name'    => __( 'Dot color', 'startup-cpt-timeline' ),
+        'id'      => $prefix . 'color',
+        'type'    => 'colorpicker',
+        'default' => '#fff'
     ) );
 }
 
@@ -132,13 +144,13 @@ add_action( 'cmb2_admin_init', 'startup_reloaded_timeline_meta' );
 // Shortcode
 add_shortcode( 'timeline', function( $atts, $content= null ){
     ob_start();
-    require get_template_directory() . '/inc/shortcodes/timeline.php';
+    require get_template_directory() . '/template-parts/content-timeline.php';
     return ob_get_clean();
 });
 
 // Enqueue scripts and styles.
 function startup_cpt_timeline_scripts() {
-    wp_enqueue_style( 'startup-cpt-timeline-pizza', plugins_url( '/css/style.css', __FILE__ ), array( ), false, 'all' );
+    wp_enqueue_style( 'startup-cpt-timeline-style', plugins_url( '/css/style.css', __FILE__ ), array( ), false, 'all' );
     wp_enqueue_script( 'startup-cpt-timeline-modernizr', plugins_url( '/js/modernizr.js', __FILE__ ), array( ), false, 'all' );
 }
 
