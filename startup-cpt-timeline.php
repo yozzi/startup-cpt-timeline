@@ -137,16 +137,45 @@ function startup_reloaded_timeline_meta() {
         'type'    => 'colorpicker',
         'default' => '#fff'
     ) );
+    
+    // Pull all the pages into an array
+    $args = array(
+        'sort_order' => 'asc',
+        'sort_column' => 'post_title',
+        'hierarchical' => 0
+    ); 
+    
+	$pages = array();
+	$pages_obj = get_pages( $args );
+	foreach ($pages_obj as $page) {
+		$pages[$page->post_name] = $page->post_title;
+	}
+    
+    $cmb_box->add_field( array(
+        'name'             => __( 'Date page', 'startup-cpt-timeline' ),
+        'id'               => $prefix . 'page',
+        'type'             => 'select',
+        'show_option_none' => true,
+        'options'          => $pages
+    ) );
 }
 
 add_action( 'cmb2_admin_init', 'startup_reloaded_timeline_meta' );
 
 // Shortcode
-add_shortcode( 'timeline', function( $atts, $content= null ){
-    ob_start();
-    require get_template_directory() . '/template-parts/content-timeline.php';
-    return ob_get_clean();
-});
+function startup_reloaded_timeline_shortcode( $atts ) {
+
+	// Attributes
+    $atts = shortcode_atts(array(
+            'bg' => ''
+        ), $atts);
+    
+	// Code
+        ob_start();
+        require get_template_directory() . '/template-parts/content-timeline.php';
+        return ob_get_clean();    
+}
+add_shortcode( 'timeline', 'startup_reloaded_timeline_shortcode' );
 
 // Enqueue scripts and styles.
 function startup_cpt_timeline_scripts() {
