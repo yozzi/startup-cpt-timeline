@@ -184,4 +184,38 @@ function startup_cpt_timeline_scripts() {
 }
 
 add_action( 'wp_enqueue_scripts', 'startup_cpt_timeline_scripts' );
+
+// Add code to footer
+function startup_cpt_timeline_footer() { ?>
+    <script type="text/javascript">
+        jQuery(document).ready(function($){
+        var timelineBlocks = jQuery('.cd-timeline-block'),
+            offset = 0.8;
+
+        //hide timeline blocks which are outside the viewport
+        hideBlocks(timelineBlocks, offset);
+
+        //on scolling, show/animate timeline blocks when enter the viewport
+        jQuery(window).on('scroll', function(){
+            (!window.requestAnimationFrame) 
+                ? setTimeout(function(){ showBlocks(timelineBlocks, offset); }, 100)
+                : window.requestAnimationFrame(function(){ showBlocks(timelineBlocks, offset); });
+        });
+
+        function hideBlocks(blocks, offset) {
+            blocks.each(function(){
+                ( jQuery(this).offset().top > jQuery(window).scrollTop()+jQuery(window).height()*offset ) && jQuery(this).find('.cd-timeline-img, .cd-timeline-content').addClass('is-hidden');
+            });
+        }
+
+        function showBlocks(blocks, offset) {
+            blocks.each(function(){
+                ( jQuery(this).offset().top <= jQuery(window).scrollTop()+jQuery(window).height()*offset && jQuery(this).find('.cd-timeline-img').hasClass('is-hidden') ) && jQuery(this).find('.cd-timeline-img, .cd-timeline-content').removeClass('is-hidden').addClass('bounce-in');
+            });
+        }
+    });
+    </script>
+<?php }
+
+add_action( 'wp_footer', 'startup_cpt_timeline_footer' );
 ?>

@@ -83,17 +83,13 @@
     height: 40px;
     border-radius: 50%;
     box-shadow: 0 0 0 4px white, inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.05);
+    text-align: center;
 }
 
 .cd-timeline-img i {
-    display: block;
-    width: 24px;
-    height: 24px;
     position: relative;
-    left: 50%;
-    top: 50%;
-    margin-left: -12px;
-    margin-top: -12px;
+    top: 16px;
+    color: #fff;
 }
 
 @media only screen and (min-width: 1170px) {
@@ -204,6 +200,8 @@
     float: left;
     padding: .8em 0;
     opacity: .7;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .cd-timeline-content::before {
@@ -216,6 +214,10 @@
     border: 7px solid transparent;
     border-right: 7px solid #f1f1f1;
 }
+
+.cd-timeline-content .btn {
+        float: right;
+    }
 
 @media only screen and (min-width: 1170px) {
     .cd-timeline-content {
@@ -236,7 +238,7 @@
         position: absolute;
         width: 100%;
         left: 122%;
-        top: 6px;
+        top: 0;
     }
     .cd-timeline-block:nth-child(even) .cd-timeline-content {
         float: right;
