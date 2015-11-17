@@ -33,7 +33,7 @@
     background: #d7e4ed;
 }
 
-@media only screen and (min-width: 1170px) {
+@media only screen and (min-width: 992px) {
     #cd-timeline {
         margin-top: 3em;
         margin-bottom: 3em;
@@ -63,7 +63,7 @@
     margin-bottom: 0;
 }
 
-@media only screen and (min-width: 1170px) {
+@media only screen and (min-width: 992px) {
     .cd-timeline-block {
         margin: 4em 0;
     }
@@ -92,7 +92,7 @@
     color: #fff;
 }
 
-@media only screen and (min-width: 1170px) {
+@media only screen and (min-width: 992px) {
     .cd-timeline-img {
         width: 60px;
         height: 60px;
@@ -219,7 +219,7 @@
         float: right;
     }
 
-@media only screen and (min-width: 1170px) {
+@media only screen and (min-width: 992px) {
     .cd-timeline-content {
         margin-left: 0;
         padding: 1.6em;
@@ -269,7 +269,7 @@
     }
 }
 
-@media only screen and (min-width: 1170px) {
+@media only screen and (min-width: 992px) {
     /* inverse bounce effect on even content blocks */
     
     .cssanimations .cd-timeline-block:nth-child(even) .cd-timeline-content.bounce-in {
