@@ -179,7 +179,7 @@ add_shortcode( 'timeline', 'startup_reloaded_timeline_shortcode' );
 
 // Enqueue scripts and styles.
 function startup_cpt_timeline_scripts() {
-    wp_enqueue_style( 'startup-cpt-timeline-style', plugins_url( '/css/style.css', __FILE__ ), array( ), false, 'all' );
+    wp_enqueue_style( 'startup-cpt-timeline-style', plugins_url( '/css/startup-cpt-timeline.css', __FILE__ ), array( ), false, 'all' );
     wp_enqueue_script( 'startup-cpt-timeline-modernizr', plugins_url( '/js/modernizr.js', __FILE__ ), array( ), false, 'all' );
 }
 
