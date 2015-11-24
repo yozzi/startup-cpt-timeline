@@ -7,6 +7,11 @@ Version: 1.2.0
 Text Domain: startup-cpt-timeline
 */
 
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 //GitHub Plugin Updater
 function startup_reloaded_timeline_updater() {
 	include_once 'lib/updater.php';
