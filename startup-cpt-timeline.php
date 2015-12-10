@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 //GitHub Plugin Updater
-function startup_reloaded_timeline_updater() {
+function startup_cpt_timeline_updater() {
 	include_once 'lib/updater.php';
 	//define( 'WP_GITHUB_FORCE_UPDATE', true );
 	if ( is_admin() ) {
@@ -34,10 +34,10 @@ function startup_reloaded_timeline_updater() {
 	}
 }
 
-//add_action( 'init', 'startup_reloaded_timeline_updater' );
+//add_action( 'init', 'startup_cpt_timeline_updater' );
 
 //CPT
-function startup_reloaded_timeline() {
+function startup_cpt_timeline() {
 	$labels = array(
 		'name'                => _x( 'Timeline', 'Post Type General Name', 'startup-cpt-timeline' ),
 		'singular_name'       => _x( 'Timeline', 'Post Type Singular Name', 'startup-cpt-timeline' ),
@@ -79,18 +79,18 @@ function startup_reloaded_timeline() {
 
 }
 
-add_action( 'init', 'startup_reloaded_timeline', 0 );
+add_action( 'init', 'startup_cpt_timeline', 0 );
 
 //Flusher les permalink à l'activation du plugin pour qu'ils fonctionnent sans mise à jour manuelle
-function startup_reloaded_timeline_rewrite_flush() {
-    startup_reloaded_timeline();
+function startup_cpt_timeline_rewrite_flush() {
+    startup_cpt_timeline();
     flush_rewrite_rules();
 }
 
-register_activation_hook( __FILE__, 'startup_reloaded_timeline_rewrite_flush' );
+register_activation_hook( __FILE__, 'startup_cpt_timeline_rewrite_flush' );
 
 // Capabilities
-function startup_reloaded_timeline_caps() {
+function startup_cpt_timeline_caps() {
 	$role_admin = get_role( 'administrator' );
 	$role_admin->add_cap( 'edit_timeline' );
 	$role_admin->add_cap( 'read_timeline' );
@@ -107,14 +107,14 @@ function startup_reloaded_timeline_caps() {
 	$role_admin->add_cap( 'edit_published_timelines' );
 }
 
-register_activation_hook( __FILE__, 'startup_reloaded_timeline_caps' );
+register_activation_hook( __FILE__, 'startup_cpt_timeline_caps' );
 
 // Metaboxes
-function startup_reloaded_timeline_meta() {
+function startup_cpt_timeline_meta() {
     require get_template_directory() . '/inc/font-awesome.php';
     
 	// Start with an underscore to hide fields from custom fields list
-	$prefix = '_startup_reloaded_timeline_';
+	$prefix = '_startup_cpt_timeline_';
 
 	$cmb_box = new_cmb2_box( array(
 		'id'            => $prefix . 'metabox',
@@ -165,10 +165,10 @@ function startup_reloaded_timeline_meta() {
     ) );
 }
 
-add_action( 'cmb2_admin_init', 'startup_reloaded_timeline_meta' );
+add_action( 'cmb2_admin_init', 'startup_cpt_timeline_meta' );
 
 // Shortcode
-function startup_reloaded_timeline_shortcode( $atts ) {
+function startup_cpt_timeline_shortcode( $atts ) {
 
 	// Attributes
     $atts = shortcode_atts(array(
@@ -180,7 +180,48 @@ function startup_reloaded_timeline_shortcode( $atts ) {
         require get_template_directory() . '/template-parts/content-timeline.php';
         return ob_get_clean();    
 }
-add_shortcode( 'timeline', 'startup_reloaded_timeline_shortcode' );
+add_shortcode( 'timeline', 'startup_cpt_timeline_shortcode' );
+
+// Shortcode UI
+/**
+ * Detecion de Shortcake. Identique dans tous les plugins.
+ */
+if ( !function_exists( 'shortcode_ui_detection' ) ) {
+    function shortcode_ui_detection() {
+        if ( !function_exists( 'shortcode_ui_register_for_shortcode' ) ) {
+            add_action( 'admin_notices', 'shortcode_ui_notice' );
+        }
+    }
+
+    function shortcode_ui_notice() {
+        if ( current_user_can( 'activate_plugins' ) ) {
+            echo '<div class="error message"><p>Shortcode UI plugin must be active to use fast shortcodes.</p></div>';
+        }
+    }
+
+add_action( 'init', 'shortcode_ui_detection' );
+}
+
+function startup_cpt_timeline_shortcode_ui() {
+
+    shortcode_ui_register_for_shortcode(
+        'timeline',
+        array(
+            'label' => esc_html__( 'Timeline', 'startup-cpt-timeline' ),
+            'listItemImage' => 'dashicons-clock',
+            'attrs' => array(
+                array(
+                    'label' => esc_html__( 'Background', 'startup-cpt-timeline' ),
+                    'attr'  => 'bg',
+                    'type'  => 'color',
+                ),
+            ),
+        )
+    );
+};
+if ( function_exists( 'shortcode_ui_register_for_shortcode' ) ) {
+    add_action( 'init', 'startup_cpt_timeline_shortcode_ui');
+}
 
 // Enqueue scripts and styles.
 function startup_cpt_timeline_scripts() {
