@@ -195,7 +195,7 @@ if ( !function_exists( 'shortcode_ui_detection' ) ) {
 
     function shortcode_ui_notice() {
         if ( current_user_can( 'activate_plugins' ) ) {
-            echo '<div class="error message"><p>Shortcode UI plugin must be active to use fast shortcodes.</p></div>';
+            echo '<div class="error message"><p>' . __( 'Shortcake plugin must be active to use fast shortcodes.', 'startup-reloaded' ) . '</p></div>';
         }
     }
 
