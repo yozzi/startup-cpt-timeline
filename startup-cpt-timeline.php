@@ -5,6 +5,7 @@ Description: Le plugin pour activer le Custom Post Timeline
 Author: Yann Caplain
 Version: 1.2.0
 Text Domain: startup-cpt-timeline
+Domain Path: /languages
 */
 
 // If this file is called directly, abort.
@@ -110,6 +111,25 @@ function startup_cpt_timeline_caps() {
 register_activation_hook( __FILE__, 'startup_cpt_timeline_caps' );
 
 // Metaboxes
+/**
+ * Detection de CMB2. Identique dans tous les plugins.
+ */
+if ( !function_exists( 'cmb2_detection' ) ) {
+    function cmb2_detection() {
+        if ( !is_plugin_active('CMB2/init.php')  && !function_exists( 'startup_reloaded_setup' ) ) {
+            add_action( 'admin_notices', 'cmb2_notice' );
+        }
+    }
+
+    function cmb2_notice() {
+        if ( current_user_can( 'activate_plugins' ) ) {
+            echo '<div class="error message"><p>' . __( 'CMB2 plugin or StartUp Reloaded theme must be active to use custom metaboxes.', 'startup-cpt-timeline' ) . '</p></div>';
+        }
+    }
+
+    add_action( 'init', 'cmb2_detection' );
+}
+
 function startup_cpt_timeline_meta() {
     require get_template_directory() . '/inc/font-awesome.php';
     
