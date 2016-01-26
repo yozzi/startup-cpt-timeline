@@ -3,7 +3,7 @@
 Plugin Name: StartUp CPT Timeline
 Description: Le plugin pour activer le Custom Post Timeline
 Author: Yann Caplain
-Version: 1.2.0
+Version: 1.0.0
 Text Domain: startup-cpt-timeline
 Domain Path: /languages
 */
