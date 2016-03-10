@@ -252,7 +252,7 @@ function startup_cpt_timeline_scripts() {
     wp_enqueue_script( 'modernizr', plugins_url( '/js/modernizr.js', __FILE__ ), array( ), '', 'false' );
 }
 
-add_action( 'wp_enqueue_scripts', 'startup_cpt_timeline_scripts' );
+add_action( 'wp_enqueue_scripts', 'startup_cpt_timeline_scripts', 15 );
 
 // Add code to footer
 function startup_cpt_timeline_footer() { ?>
