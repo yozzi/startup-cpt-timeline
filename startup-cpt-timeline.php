@@ -119,7 +119,7 @@ register_activation_hook( __FILE__, 'startup_cpt_timeline_caps' );
  */
 if ( !function_exists( 'cmb2_detection' ) ) {
     function cmb2_detection() {
-        if ( !class_exists('CMB2_Bootstrap_221')  && !function_exists( 'startup_reloaded_setup' ) ) {
+        if ( !defined( 'CMB2_LOADED' ) ) {
             add_action( 'admin_notices', 'cmb2_notice' );
         }
     }
